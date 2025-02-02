@@ -1,4 +1,4 @@
-package com.wmscode.util;
+package com.wmscode.commons.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

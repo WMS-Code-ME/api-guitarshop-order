@@ -1,5 +1,6 @@
 package com.wmscode.model.request;
 
+
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -7,9 +8,8 @@ import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.wmscode.commons.enums.StatusOrderEnum;
 
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record OrderRequest(
@@ -19,7 +19,6 @@ public record OrderRequest(
 	@Length(max = 100)
     String name,
 
-    @JsonDeserialize(as = DeliveryAddressRequest.class)
     @Schema(description = "Endereço de entrega")
     @NotNull(message = "Endereço de entrega é obrigatório")
     DeliveryAddressRequest deliveryAddress,
@@ -33,13 +32,14 @@ public record OrderRequest(
     String customerId,
     
     @Schema(description = "Lista de itens do pedido de compra")
-    @NotEmpty
-    @NotNull
-    @JsonDeserialize(as = ItemOrderRequest.class)
     @NotNull(message = "Pelo menos um item é obrigatório")
-    List<ItemOrderRequest> itemOrderRequest,
+    List<ItemOrderRequest> itemOrderRequests,
 	
     @Schema(description = "Total do pedido", example = "35999.69")
 	@NotNull(message = "Total é obrigatório")
-	Double total
+	Double total,
+
+    @Schema(description = "Status do pedido")
+    @NotNull(message = "Total é obrigatório")
+    StatusOrderEnum status
 ) {}

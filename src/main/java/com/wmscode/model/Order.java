@@ -2,7 +2,7 @@ package com.wmscode.model;
 
 import java.util.List;
 
-import com.wmscode.util.StatusOrderEnum;
+import com.wmscode.commons.enums.StatusOrderEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
