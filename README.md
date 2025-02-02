@@ -56,3 +56,10 @@ If you want to learn more about building native executables, please consult <htt
 ## Related Guides
 
 - REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
+
+
+Ecxecutando MongoDB Local
+
+```
+docker run -ti --rm -p 27017:27017 mongo:4.4
+```
