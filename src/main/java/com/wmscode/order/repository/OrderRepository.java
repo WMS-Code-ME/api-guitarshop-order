@@ -25,5 +25,4 @@ public class OrderRepository implements PanacheMongoRepositoryBase<OrderDocument
     public OrderDocument findByName(String name) {
         return find("name = ?1", name).firstResult();
     }
-
 }

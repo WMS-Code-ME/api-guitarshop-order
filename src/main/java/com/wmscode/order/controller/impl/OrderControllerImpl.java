@@ -31,7 +31,6 @@ public class OrderControllerImpl implements OrderController {
         return Response.ok(orderService.updateOrder(request)).build();
     }
 
-
     @Override
     public Response updateOrderAttribute(UpdateOrderRequest updateOrderRequest) {
         log.info("Altera campos de um pedido: {}", updateOrderRequest.id());
@@ -41,7 +40,8 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public Response deleteOrder(String id) {
         log.info("Remove um pedido: {}", id);
-        return Response.ok(orderService.deleteOrder(id)).build();
+        orderService.deleteOrder(id);
+        return Response.ok().build();
     }
 
     @Override

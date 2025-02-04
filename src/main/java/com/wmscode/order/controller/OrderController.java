@@ -73,21 +73,9 @@ public interface OrderController {
     @DELETE
     @Path("/{id}")
     @Operation(summary = "Remove um pedido de compra", description = "Remove um pedido de compra pelo identificador")
-    @APIResponse(
-        responseCode = "200", description = "SUCCESS", content = {
-            @Content(
-                mediaType = APPLICATION_JSON,
-                schema = @Schema(implementation = OrderIdResponse.class),
-                examples = @ExampleObject(value = "true")
-            )}
-        
-    ) 
-    @APIResponse(
-		responseCode = "404", description = "NOT FOUND"
-	)
-    @APIResponse(
-		responseCode = "400", description = "BAD REQUEST"
-	)
+    @APIResponse(responseCode = "200", description = "SUCCESS") 
+    @APIResponse(responseCode = "404", description = "NOT FOUND")
+    @APIResponse(responseCode = "400", description = "BAD REQUEST")
     Response deleteOrder(@PathParam("id") String id);
     
     @GET
