@@ -23,6 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestScoped
 @RequiredArgsConstructor
 public class OrderService {
+
+    private static final String ORDER_NOT_FOUND_MESSAGE = "Pedido não encontrado ";
     private final OrderRepository repository;
 
     public OrderIdResponse create(OrderRequest orderRequest) {
@@ -53,9 +55,9 @@ public class OrderService {
                 repository.persistOrUpdate(document);
                 return document;
             })
-            .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado"));
+            .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND_MESSAGE + request.id()));
 
-        return buildOrderIdResponse(request.id().toString());
+        return buildOrderIdResponse(request.id());
     }
 
     public OrderIdResponse updateOrderAttributes(UpdateOrderRequest orderRequest) {
@@ -72,16 +74,16 @@ public class OrderService {
                 repository.persistOrUpdate(document);
                 return document;
             })
-            .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado para alteração!"));
+            .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND_MESSAGE + orderRequest.id()));
 
-        return  buildOrderIdResponse(orderRequest.id().toString());
+        return  buildOrderIdResponse(orderRequest.id());
     }
 
     public OrderResponse getOrderById(String id) {
-        return (OrderResponse) Optional
+        return Optional
             .ofNullable(repository.findByIdOrder(id))
             .map(this::buildOrderResponse)
-            .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado: " + id));
+            .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND_MESSAGE + id));
     }
 
     public List<OrderResponse> getOrders() {
@@ -93,21 +95,19 @@ public class OrderService {
     }
 
     public OrderResponse getOrderByName(String name) {
-        return (OrderResponse) Optional
+        return Optional
             .ofNullable(repository.findByName(name))
             .map(this::buildOrderResponse)
-            .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado: " + name));
+            .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND_MESSAGE    + name));
     }
 
-    public OrderIdResponse deleteOrder(String id) {
+    public void deleteOrder(String id) {
         Optional
             .ofNullable(repository.findByIdOrder(id)).map(document -> {
                 repository.delete(document);
                 return document.getId().toString();
             })
-            .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado: " + id));
-
-        return buildOrderIdResponse(id);
+            .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND_MESSAGE + id));
     }
 
     private UpdateOrderRequest validateUpdateOrderRequest(UpdateOrderRequest orderRequest) {
