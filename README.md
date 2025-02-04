@@ -1,65 +1,53 @@
 # api-guitarshop-order
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+![Java](https://img.shields.io/badge/java-version%2021-blue)
+![Qurkus](https://img.shields.io/badge/quarkus-version%203.17.8-blueviolet)
+![Maven Central](https://img.shields.io/badge/maven-version%203.9.9-green)
+![lombok](https://img.shields.io/badge/lombok-version%201.18.30-orange)
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+### API criada para o trabalho final do Bootcamp de Arquitetura de Software da XPe - XP Educação.
 
-## Running the application in dev mode
+A solução aborda a criação de uma API Rest de uma loja on-line (e-commerce).
 
-You can run your application in dev mode that enables live coding using:
+Para melhor ilustrar a o desenvolvimento, a API foi criada como se fosse em um contexto de uma loja de guitarras custom shop, uma linha muito específica.
+O foco aqui é mostrar o contexto de pedidos desta loja de forma bem simples e objetiva. Alguns fatores foram abstraídos deste contexto como, autenticação, relacionamentos com formas de pagamentos, contexto de cliente e produtos, entre outros detalhes que são importantes.
 
-```shell script
-./mvnw quarkus:dev
-```
+### Tecnologias e versões utilizadas:
+- Apache Maven 3.9.9;
+- Java 21.0.4 2024-07-16;
+- Docker version 27.5.1;
+- Quarkus Framework 3.18.1;
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+### Instruções para executar a aplicação:
 
-## Packaging and running the application
+- Build e instação das dependências:
 
-The application can be packaged using:
+    ```shell script
+    mvn clean install -U
+    ```
+- Subir o banco de dados no docker:
 
-```shell script
-./mvnw package
-```
+    ```shell script
+    docker run -ti --rm -p 27017:27017 mongo:4.4
+    ```
+    - **Atenção**: Após subir o banco de dados no docker, certifique de criar o banco de dados com o nome ***"guitar-shop-order-db"*** e a coleção a ser usada deverá se chamar ***"order"***
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+- Executar a aplicação em ambiente local:
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+    ```shell script
+    ./mvnw quarkus:dev
+    ```
 
-If you want to build an _über-jar_, execute the following command:
+### Acessar aos endpoints após execução local:
+- Ao subir a aplicação acesse no seu navagador o endereço:
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+    ```shell script
+    http://localhost:4001/order/swagger
+    ```
+- Acesse a documentação no [Swagger Editor](https://editor-next.swagger.io/) pelo arquivo:
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/api-wms-music-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-
-
-Ecxecutando MongoDB Local
-
-```
-docker run -ti --rm -p 27017:27017 mongo:4.4
-```
+    ```shell script
+    src/main/resources/openapi.yaml
+    ```
+### Documentação técnica:
+- Acesse os [diagramas](docs/diagrams.md) do C4 Model.

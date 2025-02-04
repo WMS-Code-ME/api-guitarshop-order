@@ -1,0 +1,441 @@
+---
+openapi: 3.0.4
+info:
+  contact:
+    email: support@wmscode.com
+    name: Pedidos Guitar Shop
+    url: https://wmcode.com/
+  license:
+    name: MIT License
+    url: https://www.mit.edu/~amini/LICENSE.md
+  title: Pedidos Guitar Shop API
+  version: V1.0.0
+tags:
+- name: Pedidos
+  description: Pedidos de produtos da Guitar Shop
+components:
+  schemas:
+    DeliveryAddress:
+      type: object
+      properties:
+        id:
+          type: string
+        street:
+          type: string
+        number:
+          type: string
+        neighborhood:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+    DeliveryAddressRequest:
+      required:
+      - street
+      - number
+      - neighborhood
+      - city
+      - state
+      - zipCode
+      type: object
+      properties:
+        street:
+          description: Endereço
+          type: string
+          example: Avenida Paulista
+        number:
+          description: Número
+          type: string
+          example: 123B
+        neighborhood:
+          description: Bairro
+          type: string
+          example: Centro
+        city:
+          description: Cidade
+          type: string
+          example: São Paulo
+        state:
+          description: Estado/UF
+          type: string
+          example: SP
+        zipCode:
+          description: CEP
+          type: string
+          example: "02915020"
+    ItemOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        quantity:
+          format: int32
+          type: integer
+        price:
+          format: double
+          type: number
+        total:
+          format: double
+          type: number
+    ItemOrderRequest:
+      required:
+      - name
+      - description
+      - quantity
+      - price
+      - total
+      type: object
+      properties:
+        name:
+          description: Nome do item
+          type: string
+          example: Gibson Les Paul
+        description:
+          description: Descrição do item
+          type: string
+          example: Guitarra Custom Shop Gibson Les Paul 1970
+        quantity:
+          format: int32
+          description: Quantidade
+          type: integer
+          example: 1
+        price:
+          format: double
+          description: Preço unitário do item
+          type: number
+          example: 35999.69
+        total:
+          format: double
+          description: Total
+          type: number
+          example: 35999.69
+    OrderIdResponse:
+      type: object
+      properties:
+        id:
+          description: Identificador do pedido
+          type: string
+          example: 64061fb97415c10585f94482
+    OrderRequest:
+      required:
+      - name
+      - deliveryAddress
+      - customerName
+      - customerId
+      - itemOrderRequests
+      - total
+      - status
+      type: object
+      properties:
+        name:
+          description: Nome completo
+          pattern: \S
+          type: string
+          example: "Pedido #1"
+        deliveryAddress:
+          description: Endereço de entrega
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/DeliveryAddressRequest"
+        customerName:
+          description: Nome do cliente
+          type: string
+          example: Nome Cliente
+        customerId:
+          description: Identificador do cliente
+          type: string
+          example: 64061fb97415c10585f94482
+        itemOrderRequests:
+          description: Lista de itens do pedido de compra
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemOrderRequest"
+        total:
+          format: double
+          description: Total do pedido
+          type: number
+          example: 35999.69
+        status:
+          description: Status do pedido
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/StatusOrderEnum"
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          description: Identificador do pedido
+          type: string
+          example: 64061fb97415c10585f94482
+        name:
+          description: Descrição do pedido
+          type: string
+          example: "Pedido #1"
+        deliveryAddress:
+          description: Endereço de entrega
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/DeliveryAddress"
+        customerName:
+          description: Nome do cliente
+          type: string
+          example: Nome Cliente
+        customerId:
+          description: Identificador do cliente
+          type: string
+          example: 64061fb97415c10585f94482
+        itemOrder:
+          description: Lista de itens do pedido
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemOrder"
+        total:
+          format: double
+          description: Total do pedido
+          type: number
+          example: 35999.69
+        status:
+          description: Status do pedido
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/StatusOrderEnum"
+    StatusOrderEnum:
+      enum:
+      - CONFIRMED
+      - IN_PROGRESS
+      - DELIVERED
+      - CANCELED
+      type: string
+    UpdateOrderRequest:
+      required:
+      - id
+      - name
+      - deliveryAddress
+      - customerName
+      - customerId
+      - itemOrderRequests
+      - total
+      - status
+      type: object
+      properties:
+        id:
+          description: Identificador do pedido
+          type: string
+          example: 64061fb97415c10585f94482
+        name:
+          description: Nome completo
+          pattern: \S
+          type: string
+          example: "Pedido #1"
+        deliveryAddress:
+          description: Endereço de entrega
+          type: object
+          allOf:
+          - $ref: "#/components/schemas/DeliveryAddressRequest"
+        customerName:
+          description: Nome do cliente
+          type: string
+          example: Nome Cliente
+        customerId:
+          description: Identificador do cliente
+          type: string
+          example: 64061fb97415c10585f94482
+        itemOrderRequests:
+          description: Lista de itens do pedido de compra
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemOrderRequest"
+        total:
+          format: double
+          description: Total do pedido
+          type: number
+          example: 35999.69
+        status:
+          description: Status do pedido
+          type: string
+          allOf:
+          - $ref: "#/components/schemas/StatusOrderEnum"
+paths:
+  /api/orders:
+    put:
+      summary: Altera um pedido de compra
+      description: Altera um pedido de compra
+      tags:
+      - Pedidos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrderRequest"
+        required: true
+      responses:
+        "200":
+          description: SUCCESS
+          content:
+            application/json:
+              examples: {}
+              schema:
+                $ref: "#/components/schemas/OrderIdResponse"
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+    get:
+      summary: Lista pedidos de compra
+      description: Retorna uma lista de pedidos de compra
+      tags:
+      - Pedidos
+      responses:
+        "200":
+          description: SUCCESS
+          content:
+            application/json:
+              examples: {}
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderResponse"
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+    post:
+      summary: Criar pedido
+      description: Cria um novo pedido de compra
+      tags:
+      - Pedidos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderRequest"
+        required: true
+      responses:
+        "201":
+          description: CREATED
+          content:
+            application/json:
+              examples: {}
+              schema:
+                $ref: "#/components/schemas/OrderIdResponse"
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+  /api/orders/count:
+    get:
+      summary: Quantidade de pedidos
+      description: Retorna a quantidade de pedidos de compra
+      tags:
+      - Pedidos
+      responses:
+        "200":
+          description: SUCCESS
+          content:
+            application/json:
+              examples: {}
+              schema:
+                format: int64
+                type: integer
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+  /api/orders/name/{query}:
+    get:
+      summary: Dados do pedido pelo nome
+      description: Retorna os dados de um pedido pelo nome
+      tags:
+      - Pedidos
+      parameters:
+      - name: query
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: SUCCESS
+          content:
+            application/json:
+              examples: {}
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+  /api/orders/{id}:
+    patch:
+      summary: Altera campos de um pedido de compra
+      description: Altera campos de um pedido de compra
+      tags:
+      - Pedidos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrderRequest"
+        required: true
+      responses:
+        "200":
+          description: SUCCESS
+          content:
+            application/json:
+              examples: {}
+              schema:
+                $ref: "#/components/schemas/OrderIdResponse"
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+    get:
+      summary: Dados do pedido pelo id
+      description: Retorna os dados de um pedido pelo identificador
+      tags:
+      - Pedidos
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: SUCCESS
+          content:
+            application/json:
+              examples: {}
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+    delete:
+      summary: Remove um pedido de compra
+      description: Remove um pedido de compra pelo identificador
+      tags:
+      - Pedidos
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: SUCCESS
+        "404":
+          description: NOT FOUND
+        "400":
+          description: BAD REQUEST
+servers:
+- url: http://localhost:4001
