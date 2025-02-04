@@ -1,4 +1,4 @@
-package com.wmscode.model.request;
+package com.wmscode.order.model.request;
 
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 

@@ -1,12 +1,12 @@
-package com.wmscode.repository;
+package com.wmscode.order.repository.mongodb.document;
 import java.util.List;
 
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
 import com.wmscode.commons.enums.StatusOrderEnum;
-import com.wmscode.model.request.DeliveryAddressRequest;
-import com.wmscode.model.request.ItemOrderRequest;
+import com.wmscode.order.model.request.DeliveryAddressRequest;
+import com.wmscode.order.model.request.ItemOrderRequest;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
 import lombok.AllArgsConstructor;

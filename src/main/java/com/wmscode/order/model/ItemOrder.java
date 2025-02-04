@@ -1,4 +1,4 @@
-package com.wmscode.model;
+package com.wmscode.order.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

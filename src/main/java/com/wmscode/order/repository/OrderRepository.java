@@ -1,8 +1,9 @@
-package com.wmscode.repository;
+package com.wmscode.order.repository;
 
 import org.bson.types.ObjectId;
 
 import com.wmscode.commons.exception.OrderNotFoundException;
+import com.wmscode.order.repository.mongodb.document.OrderDocument;
 
 import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
 import jakarta.enterprise.context.RequestScoped;
@@ -21,7 +22,7 @@ public class OrderRepository implements PanacheMongoRepositoryBase<OrderDocument
           .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado"));
       }
 
-    public Object findByName(String name) {
+    public OrderDocument findByName(String name) {
         return find("name = ?1", name).firstResult();
     }
 
