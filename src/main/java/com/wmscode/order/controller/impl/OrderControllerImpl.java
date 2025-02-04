@@ -1,9 +1,9 @@
-package com.wmscode.controller.impl;
+package com.wmscode.order.controller.impl;
 
-import com.wmscode.controller.OrderController;
-import com.wmscode.model.request.OrderRequest;
-import com.wmscode.model.request.UpdateOrderRequest;
-import com.wmscode.service.OrderService;
+import com.wmscode.order.controller.OrderController;
+import com.wmscode.order.model.request.OrderRequest;
+import com.wmscode.order.model.request.UpdateOrderRequest;
+import com.wmscode.order.service.OrderService;
 
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +27,15 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public Response updateOrder(UpdateOrderRequest request) {
-        log.info("Altera um pedido: {}", request.orderId());
+        log.info("Altera um pedido: {}", request.id());
         return Response.ok(orderService.updateOrder(request)).build();
     }
 
 
     @Override
     public Response updateOrderAttribute(UpdateOrderRequest updateOrderRequest) {
-        log.info("Altera campos de um pedido: {}", updateOrderRequest.orderId());
-        return Response.ok(orderService.updateOrderAttributes(updateOrderRequest.orderId().toString(), updateOrderRequest.orderRequest())).build();
+        log.info("Altera campos de um pedido: {}", updateOrderRequest.id());
+        return Response.ok(orderService.updateOrderAttributes(updateOrderRequest)).build();
     }
 
     @Override

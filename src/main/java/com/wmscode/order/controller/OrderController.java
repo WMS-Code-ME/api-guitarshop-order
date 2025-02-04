@@ -1,4 +1,4 @@
-package com.wmscode.controller;
+package com.wmscode.order.controller;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.eclipse.microprofile.openapi.annotations.enums.SchemaType.ARRAY;
@@ -10,9 +10,10 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import com.wmscode.model.request.OrderRequest;
-import com.wmscode.model.request.UpdateOrderRequest;
-import com.wmscode.repository.OrderDocument;
+import com.wmscode.order.model.request.OrderRequest;
+import com.wmscode.order.model.request.UpdateOrderRequest;
+import com.wmscode.order.model.response.OrderIdResponse;
+import com.wmscode.order.model.response.OrderResponse;
 
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -29,7 +30,7 @@ import jakarta.ws.rs.core.Response;
 @Tag(name = "Pedidos", description = "Pedidos de produtos da Guitar Shop")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-@Path("/orders")
+@Path("/api/orders")
 public interface OrderController {
 
     @POST
@@ -37,7 +38,7 @@ public interface OrderController {
     @APIResponse(responseCode = "201", description = "CREATED", content = {
         @Content(
             mediaType = APPLICATION_JSON,
-            schema = @Schema(implementation = String.class),
+            schema = @Schema(implementation = OrderIdResponse.class),
             examples = @ExampleObject(value = "true")
         )})
     @APIResponse(responseCode = "404", description = "NOT FOUND")
@@ -49,7 +50,7 @@ public interface OrderController {
     @APIResponse(responseCode = "200", description = "SUCCESS", content = {
         @Content(
             mediaType = APPLICATION_JSON,
-            schema = @Schema(implementation = String.class),
+            schema = @Schema(implementation = OrderIdResponse.class),
             examples = @ExampleObject(value = "true")
         )}) 
     @APIResponse(responseCode = "404", description = "NOT FOUND")
@@ -57,11 +58,12 @@ public interface OrderController {
     Response updateOrder(UpdateOrderRequest updateOrderRequest);
 
     @PATCH
+    @Path("/{id}")
     @Operation(summary = "Altera campos de um pedido de compra", description = "Altera campos de um pedido de compra")
     @APIResponse(responseCode = "200", description = "SUCCESS", content = {
         @Content(
             mediaType = APPLICATION_JSON,
-            schema = @Schema(implementation = String.class),
+            schema = @Schema(implementation = OrderIdResponse.class),
             examples = @ExampleObject(value = "true")
         )}) 
     @APIResponse(responseCode = "404", description = "NOT FOUND")
@@ -75,7 +77,7 @@ public interface OrderController {
         responseCode = "200", description = "SUCCESS", content = {
             @Content(
                 mediaType = APPLICATION_JSON,
-                schema = @Schema(implementation = String.class),
+                schema = @Schema(implementation = OrderIdResponse.class),
                 examples = @ExampleObject(value = "true")
             )}
         
@@ -94,7 +96,7 @@ public interface OrderController {
 		responseCode = "200", description = "SUCCESS", content = {
             @Content(
                 mediaType = APPLICATION_JSON,
-                schema = @Schema(implementation = OrderDocument.class, type = ARRAY),
+                schema = @Schema(implementation = OrderResponse.class, type = ARRAY),
                 examples = @ExampleObject(value = "true")
             )}
 	)
@@ -110,7 +112,7 @@ public interface OrderController {
 		responseCode = "200", description = "SUCCESS", content = {
             @Content(
                 mediaType = APPLICATION_JSON,
-                schema = @Schema(implementation = OrderDocument.class),
+                schema = @Schema(implementation = OrderResponse.class),
                 examples = @ExampleObject(value = "true")
             )}
 	)
@@ -125,7 +127,7 @@ public interface OrderController {
 		responseCode = "200", description = "SUCCESS", content = {
             @Content(
                 mediaType = APPLICATION_JSON,
-                schema = @Schema(implementation = OrderDocument.class),
+                schema = @Schema(implementation = OrderResponse.class),
                 examples = @ExampleObject(value = "true")
             )}
 	)
@@ -145,7 +147,7 @@ public interface OrderController {
 		responseCode = "200", description = "SUCCESS", content = {
             @Content(
                 mediaType = APPLICATION_JSON,
-                schema = @Schema(implementation = Integer.class),
+                schema = @Schema(implementation = Long.class),
                 examples = @ExampleObject(value = "true")
             )}
 	)
