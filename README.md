@@ -30,7 +30,7 @@ O foco aqui é mostrar o contexto de pedidos desta loja de forma bem simples e o
     ```shell script
     docker run -ti --rm -p 27017:27017 mongo:4.4
     ```
-    - **Atenção**: Após subir o banco de dados no docker, certifique de criar o banco de dados com o nome ***"guitar-shop-order-db"*** e a coleção a ser usada deverá se chamar ***"order"***
+    - **Atenção**: Após subir o banco de dados no docker, certifique de criar o banco de dados com o nome ***"guitar-shop-order-db"*** e a coleção a ser usada deverá se chamar ***"orders"***
 
 - Executar a aplicação em ambiente local:
 
