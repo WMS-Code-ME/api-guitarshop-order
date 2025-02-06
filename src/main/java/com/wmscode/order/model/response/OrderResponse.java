@@ -5,8 +5,8 @@ import java.util.List;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import com.wmscode.commons.enums.StatusOrderEnum;
-import com.wmscode.order.model.DeliveryAddress;
-import com.wmscode.order.model.ItemOrder;
+import com.wmscode.order.model.DeliveryAddressDTO;
+import com.wmscode.order.model.ItemOrderDTO;
 
 import lombok.Builder;
 
@@ -19,7 +19,7 @@ public record OrderResponse(
     String name,
     
     @Schema(description = "Endereço de entrega")
-    DeliveryAddress deliveryAddress,
+    DeliveryAddressDTO deliveryAddress,
     
     @Schema(description = "Nome do cliente", example = "Nome Cliente")
     String customerName,
@@ -28,7 +28,7 @@ public record OrderResponse(
     String customerId,
     
     @Schema(description = "Lista de itens do pedido")
-    List<ItemOrder> itemOrder,
+    List<ItemOrderDTO> itemOrder,
 
     @Schema(description = "Total do pedido", example = "35999.69")
     Double total,

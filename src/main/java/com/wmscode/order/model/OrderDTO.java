@@ -11,13 +11,13 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class Order {
+public class OrderDTO {
     private String id;
     private String name;
-    private DeliveryAddress deliveryAddress;
+    private DeliveryAddressDTO deliveryAddress;
     private String customerName;
     private String customerId;
-    private List<ItemOrder> itemOrder;
+    private List<ItemOrderDTO> itemOrder;
     private Double total;
     private StatusOrderEnum status;
 }
