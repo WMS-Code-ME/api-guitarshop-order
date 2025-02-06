@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class DeliveryAddress {
+public class DeliveryAddressDTO {
     private String id;
     private String street;
     private String number;

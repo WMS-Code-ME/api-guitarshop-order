@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.wmscode.commons.exception.OrderNotFoundException;
-import com.wmscode.order.model.DeliveryAddress;
-import com.wmscode.order.model.ItemOrder;
+import com.wmscode.order.model.DeliveryAddressDTO;
+import com.wmscode.order.model.ItemOrderDTO;
 import com.wmscode.order.model.request.DeliveryAddressRequest;
 import com.wmscode.order.model.request.ItemOrderRequest;
 import com.wmscode.order.model.request.OrderRequest;
@@ -168,8 +168,8 @@ public class OrderService {
             .build();
     }
 
-    private DeliveryAddress buildDeliveryAddress(DeliveryAddressRequest deliveryAddressRequest) {
-        return DeliveryAddress.builder()
+    private DeliveryAddressDTO buildDeliveryAddress(DeliveryAddressRequest deliveryAddressRequest) {
+        return DeliveryAddressDTO.builder()
             .city(deliveryAddressRequest.city())
             .neighborhood(deliveryAddressRequest.neighborhood())
             .number(deliveryAddressRequest.number())
@@ -179,9 +179,9 @@ public class OrderService {
             .build();
     }
 
-    private List<ItemOrder> buildItemOrder(List<ItemOrderRequest> itemOrderRequests) {
+    private List<ItemOrderDTO> buildItemOrder(List<ItemOrderRequest> itemOrderRequests) {
         return itemOrderRequests.stream().map(item -> {
-            return ItemOrder.builder()
+            return ItemOrderDTO.builder()
                 .description(item.description())
                 .price(item.price())
                 .quantity(item.quantity())
